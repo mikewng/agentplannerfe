@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./App.scss"
 
 export const metadata: Metadata = {
   title: "Calendar Planner Agent",
