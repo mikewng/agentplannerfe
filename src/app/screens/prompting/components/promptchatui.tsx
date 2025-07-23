@@ -1,32 +1,67 @@
-import { useChat } from '@ai-sdk/react'
+import React, { useEffect, useRef } from "react";
+import { useChat, Message } from "@ai-sdk/react";
+import { sendMessageToGPT } from "@/app/util/llmapi";
 import "./promptchatui.scss"
 
-const PromptChatUI = () => {
-    const { messages, input, handleInputChange, handleSubmit } = useChat({
-        api: "/api/gpt-chat"
+export default function ChatUI() {
+    const { messages, setMessages, input, setInput, handleInputChange } = useChat({
+        // api: "/api/chat", // Points to your backend endpoint
     });
 
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+
+    async function handleSend(e: React.FormEvent) {
+        e.preventDefault();
+
+        const userMessage: Message = {
+            id: String(Date.now()),
+            role: "user",
+            content: input,
+        };
+
+        const newMessages: Message[] = [...messages, userMessage];
+        setMessages(newMessages);
+        setInput("");
+
+        const reply = await sendMessageToGPT(newMessages);
+
+        const aiMessage: Message = {
+            id: String(Date.now() + 1),
+            role: "system",
+            content: reply,
+        };
+
+        setMessages([...newMessages, aiMessage]);
+    }
+
     return (
-        <div className="promptchat-ui-container" >
-            <div className="promptchat-ui-message-box-container" style={{ minHeight: "300px", border: "1px solid #ccc", padding: "10px" }}>
+        <div className="prompt-chat-ui-container">
+            <div className="prompt-chat-ui-box-container" ref={scrollRef}>
                 {messages.map((m, i) => (
-                    <div key={i} style={{ margin: "5px 0" }}>
-                        <b>{m.role === "user" ? "You" : "AI"}:</b> {m.content}
+                    <div className={"prompt-message-container " + m.role} key={i}>
+                        <div className="prompt-message-content">
+                            <div className="prompt-author-text">{m.role === "user" ? "You" : "EVA"}</div>
+                            <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>{m.content || ""}</div>
+                        </div>
                     </div>
                 ))}
             </div>
-            <form onSubmit={handleSubmit} style={{ marginTop: "10px" }}>
+            <form className="prompt-chat-ui-input-container" onSubmit={handleSend}>
                 <input
                     value={input}
                     onChange={handleInputChange}
-                    placeholder="Ask something..."
-                    style={{ width: "80%" }}
+                    placeholder="Type a message..."
+                    className="prompt-chat-ui-input-control"
                 />
                 <button type="submit">Send</button>
             </form>
-        </div>
+        </div >
     );
 }
-
-
-export default PromptChatUI;

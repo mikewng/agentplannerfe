@@ -1,14 +1,17 @@
 body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
+    overflow-y: hidden;
 }
 
 .core-home-screen {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+
 }
 
 .typewriter {
@@ -20,6 +23,14 @@ body {
     animation:
         typing 1.5s steps(40, end),
         blink-caret 1.75s step-end infinite;
+}
+
+.typewriter-text {
+    overflow: hidden;
+    border-right: .15em solid black;
+    white-space: nowrap;
+    animation:
+        typing 0.15s steps(40, end),
 }
 
 /* The typing effect */

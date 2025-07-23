@@ -44,4 +44,8 @@
     border-radius: 0.5rem;
     width: 100%;
     white-space: nowrap;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
