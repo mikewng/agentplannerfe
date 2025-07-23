@@ -7,23 +7,16 @@ const MainScreen: React.FC<LoginProps> = ({ supportedApplications = supportedApp
     return (
         <div className="main-screen-container">
             <div className="main-screen-header-container">
-                <h1>Calendar Agent Planner</h1>
-            </div>
-            <div className="main-screen-subheader-container">
-                <div className="subheader-text">Login to your calendar app and start planning!</div>
-                <div className="subheader-supported-apps">
-                    <div className="support-apps-text">Supported Calendar Applications</div>
-                    {
-                        supportedApps.map((x, i) => {
-                            return (
-                                <div className="supported-apps" key={i}>{x}</div>
-                            )
-                        })
-                    }
-                </div>
+                <div className="header-text">Hello, I am EVA.</div>
+                <div className="header2-text">Your calendar planner agent.</div>
             </div>
             <div className="main-screen-body-container">
-                <Login supportedApplications={supportedApplications} />
+                <div className="main-screen-subheader-container">
+                    <div className="subheader-text">Login to your calendar app and start planning!</div>
+                </div>
+                <div className="main-screen-login-container">
+                    <Login supportedApplications={supportedApplications} />
+                </div>
             </div>
         </div>
     )

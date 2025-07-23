@@ -1,0 +1,35 @@
+.login-container {
+    display: flex;
+    .login-wrapper {
+        position: relative;
+
+        .login-text-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            width: 5rem;
+
+            border: 1px solid black;
+            border-radius: 0.35rem;
+        }
+
+        .login-options-dropdown-container {
+            position: absolute;
+            display: none;
+
+            &.active {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+.login-option-container {
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 0.35rem;
+    width: 100%;
+    white-space: nowrap;
+}
