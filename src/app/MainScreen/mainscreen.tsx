@@ -1,8 +1,9 @@
 import "./mainscreen.scss"
 import { supportedApps } from "../util/calendarapplib";
 import Login from "./components/login";
+import { LoginProps } from "./contracts/loginprops";
 
-const MainScreen = () => {
+const MainScreen: React.FC<LoginProps> = ({ supportedApplications = supportedApps }) => {
     return (
         <div className="main-screen-container">
             <div className="main-screen-header-container">
@@ -22,7 +23,7 @@ const MainScreen = () => {
                 </div>
             </div>
             <div className="main-screen-body-container">
-                <Login />
+                <Login supportedApplications={supportedApplications} />
             </div>
         </div>
     )

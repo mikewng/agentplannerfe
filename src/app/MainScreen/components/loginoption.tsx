@@ -1,7 +1,7 @@
-const LoginOption = () => {
+const LoginOption = ({ loginAppName }: { loginAppName: string }) => {
     return (
         <div className="login-option-container">
-            
+            {loginAppName}
         </div>
     )
 }
