@@ -25,6 +25,14 @@ body {
         blink-caret 1.75s step-end infinite;
 }
 
+.typewriter-text {
+    overflow: hidden;
+    border-right: .15em solid black;
+    white-space: nowrap;
+    animation:
+        typing 0.15s steps(40, end),
+}
+
 /* The typing effect */
 @keyframes typing {
     from {

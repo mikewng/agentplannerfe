@@ -43,10 +43,13 @@ export default function ChatUI() {
 
     return (
         <div className="prompt-chat-ui-container">
-            <div className="prompt-chat-ui-message-container" ref={scrollRef}>
+            <div className="prompt-chat-ui-box-container" ref={scrollRef}>
                 {messages.map((m, i) => (
-                    <div className={"prompt-message " + m.role} key={i}>
-                        <div className="prompt-message-text">{m.content || ""}</div>
+                    <div className={"prompt-message-container " + m.role} key={i}>
+                        <div className="prompt-message-content">
+                            <div className="prompt-author-text">{m.role === "user" ? "You" : "EVA"}</div>
+                            <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>{m.content || ""}</div>
+                        </div>
                     </div>
                 ))}
             </div>
