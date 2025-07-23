@@ -1,58 +1,64 @@
 import React, { useEffect, useRef } from "react";
-import { useChat } from "@ai-sdk/react";
+import { useChat, Message } from "@ai-sdk/react";
+import { sendMessageToGPT } from "@/app/util/llmapi";
+import "./promptchatui.scss"
 
 export default function ChatUI() {
-    const { messages, input, handleInputChange, handleSubmit } = useChat({
-        api: "/api/chat", // Points to your backend endpoint
+    const { messages, setMessages, input, setInput, handleInputChange } = useChat({
+        // api: "/api/chat", // Points to your backend endpoint
     });
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to newest message
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages]);
 
+
+    async function handleSend(e: React.FormEvent) {
+        e.preventDefault();
+
+        const userMessage: Message = {
+            id: String(Date.now()),
+            role: "user",
+            content: input,
+        };
+
+        const newMessages: Message[] = [...messages, userMessage];
+        setMessages(newMessages);
+        setInput("");
+
+        const reply = await sendMessageToGPT(newMessages);
+
+        const aiMessage: Message = {
+            id: String(Date.now() + 1),
+            role: "system",
+            content: reply,
+        };
+
+        setMessages([...newMessages, aiMessage]);
+    }
+
     return (
-        <div style={{ maxWidth: "100rem", margin: "0 auto", padding: "20px" }}>
-            <div
-                ref={scrollRef}
-                style={{
-                    border: "1px solid #ccc",
-                    borderRadius: "8px",
-                    padding: "10px",
-                    height: "400px",
-                    overflowY: "auto",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    marginBottom: "10px",
-                    width: '25rem'
-                }}
-            >
+        <div className="prompt-chat-ui-container">
+            <div className="prompt-chat-ui-message-container" ref={scrollRef}>
                 {messages.map((m, i) => (
-                    <div className="message" key={i}>{m.content || ""}</div>
+                    <div className={"prompt-message " + m.role} key={i}>
+                        <div className="prompt-message-text">{m.content || ""}</div>
+                    </div>
                 ))}
             </div>
-            <form
-                onSubmit={handleSubmit}
-                style={{ display: "flex", gap: "10px", alignItems: "center" }}
-            >
+            <form className="prompt-chat-ui-input-container" onSubmit={handleSend}>
                 <input
                     value={input}
                     onChange={handleInputChange}
                     placeholder="Type a message..."
-                    style={{
-                        flex: 1,
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: "1px solid #ccc",
-                    }}
+                    className="prompt-chat-ui-input-control"
                 />
                 <button type="submit">Send</button>
             </form>
-        </div>
+        </div >
     );
 }

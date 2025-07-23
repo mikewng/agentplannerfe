@@ -1,8 +1,58 @@
-.promptchat-ui-container {
+.prompt-chat-ui-container {
     height: 100%;
-    
-    .promptchat-ui-message-box-container {
-        //style={{ minHeight: "300px", border: "1px solid #ccc", padding: "10px" }}
-        border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    .prompt-chat-ui-message-container {
+        width: 100%;
+        padding: 0.9rem;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        height: 70vh;
+        overflow-y: auto;
+
+        .prompt-message {
+            display: flex;
+            flex-direction: row;
+            padding: 0.65rem;
+
+            .prompt-message-text {
+                padding: 1rem;
+                border: 2px solid black;
+            }
+
+            &.user {
+                justify-content: end;
+
+                .prompt-message-text {
+                    background-color: rgb(189, 189, 189);
+                }
+            }
+
+            &.system {
+                justify-content: start;
+
+                .prompt-message-text {
+                    background-color: rgb(80, 175, 198);
+                }
+            }
+        }
+    }
+
+    .prompt-chat-ui-input-container {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+
+    .prompt-chat-ui-input-control {
+        flex: 1;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid #ccc;
     }
 }

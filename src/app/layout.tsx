@@ -1,6 +1,7 @@
 'use client'
 
 import "./App.scss"
+import "./util/mockchatapi";
 
 import { NavigationProvider } from "../app/context/navigationContext";
 
