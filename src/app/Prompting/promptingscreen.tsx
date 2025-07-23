@@ -1,7 +1,9 @@
 const PromptingScreen = () => {
     return (
         <div className="prompt-screen-container">
-            <div>Prompting Screen</div>
+            <div className="prompt-screen-header">
+                What's on your mind?
+            </div>
         </div>
     )
 }

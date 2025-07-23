@@ -7,7 +7,7 @@ const MainScreen: React.FC<LoginProps> = ({ supportedApplications = supportedApp
     return (
         <div className="main-screen-container">
             <div className="main-screen-header-container">
-                <div className="header-text">Hello, I am EVA.</div>
+                <div className="header-text typewriter">Hello, I am EVA.</div>
                 <div className="header2-text">Your calendar planner agent.</div>
             </div>
             <div className="main-screen-body-container">
