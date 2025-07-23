@@ -1,32 +1,58 @@
-import { useChat } from '@ai-sdk/react'
-import "./promptchatui.scss"
+import React, { useEffect, useRef } from "react";
+import { useChat } from "@ai-sdk/react";
 
-const PromptChatUI = () => {
+export default function ChatUI() {
     const { messages, input, handleInputChange, handleSubmit } = useChat({
-        api: "/api/gpt-chat"
+        api: "/api/chat", // Points to your backend endpoint
     });
 
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to newest message
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
     return (
-        <div className="promptchat-ui-container" >
-            <div className="promptchat-ui-message-box-container" style={{ minHeight: "300px", border: "1px solid #ccc", padding: "10px" }}>
+        <div style={{ maxWidth: "100rem", margin: "0 auto", padding: "20px" }}>
+            <div
+                ref={scrollRef}
+                style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    height: "400px",
+                    overflowY: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    marginBottom: "10px",
+                    width: '25rem'
+                }}
+            >
                 {messages.map((m, i) => (
-                    <div key={i} style={{ margin: "5px 0" }}>
-                        <b>{m.role === "user" ? "You" : "AI"}:</b> {m.content}
-                    </div>
+                    <div className="message" key={i}>{m.content || ""}</div>
                 ))}
             </div>
-            <form onSubmit={handleSubmit} style={{ marginTop: "10px" }}>
+            <form
+                onSubmit={handleSubmit}
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+            >
                 <input
                     value={input}
                     onChange={handleInputChange}
-                    placeholder="Ask something..."
-                    style={{ width: "80%" }}
+                    placeholder="Type a message..."
+                    style={{
+                        flex: 1,
+                        padding: "8px",
+                        borderRadius: "4px",
+                        border: "1px solid #ccc",
+                    }}
                 />
                 <button type="submit">Send</button>
             </form>
         </div>
     );
 }
-
-
-export default PromptChatUI;
