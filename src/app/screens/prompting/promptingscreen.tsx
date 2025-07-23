@@ -1,7 +1,9 @@
+import PromptChatUI from "./components/promptchatui";
+
 const PromptingScreen = () => {
     return (
         <div className="prompting-screen-container">
-            Prompting
+            <PromptChatUI />
         </div>
     )
 }
