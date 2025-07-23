@@ -1,4 +1,4 @@
-import { LoginProps } from "../contracts/loginprops";
+import { LoginProps } from "../../../contracts/loginprops";
 import LoginOption from "./loginoption";
 
 import "./login.scss"

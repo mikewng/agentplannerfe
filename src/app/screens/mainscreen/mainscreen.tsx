@@ -1,7 +1,7 @@
 import "./mainscreen.scss"
-import { supportedApps } from "../util/calendarapplib";
+import { supportedApps } from "../../util/calendarapplib";
 import Login from "./components/login";
-import { LoginProps } from "./contracts/loginprops";
+import { LoginProps } from "../../contracts/loginprops";
 
 const MainScreen: React.FC<LoginProps> = ({ supportedApplications = supportedApps }) => {
     return (
