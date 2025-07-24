@@ -11,6 +11,16 @@ export default function ChatUI() {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const aiMessage: Message = {
+            id: String(Date.now() + 1),
+            role: "system",
+            content: "Hello! What's on your mind?",
+        };
+
+        setMessages([...messages, aiMessage])
+    }, [])
+
+    useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }

@@ -5,10 +5,15 @@ import "./promptingscreen.scss"
 const PromptingScreen = () => {
     return (
         <div className="prompting-screen-container">
-            <div className="prompting-header-container">
-                <div className="header-text">What's on your mind?</div>
+            <div className="prompting-sidebar-container">
+                Logout
             </div>
-            <PromptChatUI />
+            <div className="prompting-main-body-container">
+                <div className="prompting-header-container">
+                    <div className="header-text">EVA</div>
+                </div>
+                <PromptChatUI />
+            </div>
         </div>
     )
 }

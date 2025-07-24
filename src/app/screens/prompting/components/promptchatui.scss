@@ -8,7 +8,8 @@
 
     .prompt-chat-ui-box-container {
         width: 100%;
-        padding: 0.9rem;
+        // min-width: 50vw;
+        // max-width: 50vw;
         border: 2px solid #ccc;
         border-radius: 8px;
         height: 70vh;
@@ -27,7 +28,7 @@
 
                 .prompt-message-text {
                     border: 2px solid black;
-                    border-radius: 0.25rem;
+                    border-radius: 0.35rem;
                     padding: 0.65rem;
                 }
             }
@@ -42,7 +43,7 @@
                 }
 
                 .prompt-message-text {
-                    background-color: rgb(189, 189, 189);
+                    background-color: rgb(200, 200, 200);
                 }
             }
 
@@ -56,11 +57,9 @@
                 }
 
                 .prompt-message-text {
-                    background-color: rgb(80, 175, 198);
+                    background-color: rgb(82, 200, 255);
                 }
             }
-
-
         }
     }
 
@@ -68,7 +67,7 @@
         width: 100%;
         display: flex;
         gap: 1rem;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 
     .prompt-chat-ui-input-control {
