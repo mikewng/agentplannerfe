@@ -22,6 +22,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: fit-content;
+
+            padding: 0.5rem;
 
             .header-text {
                 font-size: 4rem;
