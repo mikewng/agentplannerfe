@@ -1,32 +1,46 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useChat, Message } from "@ai-sdk/react";
+import { io, Socket } from "socket.io-client";
 import { sendMessageToGPT } from "@/app/util/llmapi";
-import "./promptchatui.scss"
+import "./promptchatui.scss";
 
 export default function ChatUI() {
-    const { messages, setMessages, input, setInput, handleInputChange } = useChat({
-        // api: "/api/chat", // Points to your backend endpoint
-    });
-
+    const { messages, setMessages, input, setInput, handleInputChange } = useChat({});
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const aiMessage: Message = {
-            id: String(Date.now() + 1),
-            role: "system",
-            content: "Hello! What's on your mind?",
+        const s = io("http://localhost:3001");
+        setSocket(s);
+
+        s.on("gpt-token", (chunk: string) => {
+            setMessages(prev => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+
+                if (last && last.role === "system") {
+                    last.content += chunk;
+                } else {
+                    updated.push({ id: String(Date.now()), role: "system", content: chunk });
+                }
+
+                return [...updated];
+            });
+        });
+
+        return () => {
+            s.disconnect();
         };
+    }, [setMessages]);
 
-        setMessages([...messages, aiMessage])
-    }, [])
-
+    // Auto-scroll on new messages
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages]);
 
-
+    // Send user message and tell backend to start streaming
     async function handleSend(e: React.FormEvent) {
         e.preventDefault();
 
@@ -40,15 +54,17 @@ export default function ChatUI() {
         setMessages(newMessages);
         setInput("");
 
-        const reply = await sendMessageToGPT(newMessages);
-
-        const aiMessage: Message = {
-            id: String(Date.now() + 1),
-            role: "system",
-            content: reply,
-        };
-
-        setMessages([...newMessages, aiMessage]);
+        if (socket) {
+            socket.emit("start-stream", { prompt: input });
+        } else {
+            const reply = await sendMessageToGPT(newMessages);
+            const aiMessage: Message = {
+                id: String(Date.now() + 1),
+                role: "system",
+                content: reply,
+            };
+            setMessages([...newMessages, aiMessage]);
+        }
     }
 
     return (
@@ -57,8 +73,17 @@ export default function ChatUI() {
                 {messages.map((m, i) => (
                     <div className={"prompt-message-container " + m.role} key={i}>
                         <div className="prompt-message-content">
-                            <div className="prompt-author-text">{m.role === "user" ? "You" : "EVA"}</div>
-                            <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>{m.content || ""}</div>
+                            <div className="prompt-author-text">
+                                {m.role === "user" ? "You" : "EVA"}
+                            </div>
+                            <div
+                                className={
+                                    "prompt-message-text" +
+                                    (m.role === "system" ? " typewriter-text" : "")
+                                }
+                            >
+                                {m.content || ""}
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -72,6 +97,85 @@ export default function ChatUI() {
                 />
                 <button type="submit">Send</button>
             </form>
-        </div >
+        </div>
     );
 }
+
+
+// import React, { useEffect, useRef } from "react";
+// import { useChat, Message } from "@ai-sdk/react";
+// import { sendMessageToGPT } from "@/app/util/llmapi";
+// import "./promptchatui.scss"
+
+// export default function ChatUI() {
+//     const { messages, setMessages, input, setInput, handleInputChange } = useChat({
+//         // api: "/api/chat", // Points to your backend endpoint
+//     });
+
+//     const scrollRef = useRef<HTMLDivElement>(null);
+
+//     useEffect(() => {
+//         const aiMessage: Message = {
+//             id: String(Date.now() + 1),
+//             role: "system",
+//             content: "Hello! What's on your mind?",
+//         };
+
+//         setMessages([...messages, aiMessage])
+//     }, [])
+
+//     useEffect(() => {
+//         if (scrollRef.current) {
+//             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+//         }
+//     }, [messages]);
+
+
+//     async function handleSend(e: React.FormEvent) {
+//         e.preventDefault();
+
+//         const userMessage: Message = {
+//             id: String(Date.now()),
+//             role: "user",
+//             content: input,
+//         };
+
+//         const newMessages: Message[] = [...messages, userMessage];
+//         setMessages(newMessages);
+//         setInput("");
+
+//         const reply = await sendMessageToGPT(newMessages);
+
+//         const aiMessage: Message = {
+//             id: String(Date.now() + 1),
+//             role: "system",
+//             content: reply,
+//         };
+
+//         setMessages([...newMessages, aiMessage]);
+//     }
+
+//     return (
+//         <div className="prompt-chat-ui-container">
+//             <div className="prompt-chat-ui-box-container" ref={scrollRef}>
+//                 {messages.map((m, i) => (
+//                     <div className={"prompt-message-container " + m.role} key={i}>
+//                         <div className="prompt-message-content">
+//                             <div className="prompt-author-text">{m.role === "user" ? "You" : "EVA"}</div>
+//                             <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>{m.content || ""}</div>
+//                         </div>
+//                     </div>
+//                 ))}
+//             </div>
+//             <form className="prompt-chat-ui-input-container" onSubmit={handleSend}>
+//                 <input
+//                     value={input}
+//                     onChange={handleInputChange}
+//                     placeholder="Type a message..."
+//                     className="prompt-chat-ui-input-control"
+//                 />
+//                 <button type="submit">Send</button>
+//             </form>
+//         </div >
+//     );
+// }
