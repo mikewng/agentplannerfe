@@ -19,6 +19,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const authUrl = data.value;
 
             const popup = window.open(authUrl, 'CalendarLogin', 'width=500,height=600');
+
+            const interval = setInterval(() => {
+                if (!popup || popup.closed) {
+                    clearInterval(interval);
+                    axios.get('http://localhost:3001/apitest').then(res => {
+                        console.log("what is res", res)
+                        setIsAuthenticated(res ? true : false);
+                    });
+                }
+            }, 500);
         } catch (err) {
             console.error('Error during login:', err);
         }
