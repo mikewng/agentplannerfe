@@ -9,7 +9,6 @@ export default function Home() {
 
   return (
     <div className="core-home-screen">
-      <button onClick={() => navigate(currentPage === 'main' ? 'prompt' : 'main')} style={{ position: 'absolute', top: '0%', left: '0%' }}>switch</button>
       {
         currentPage === 'main' &&
         <MainScreen supportedApplications={supportedApps} />
