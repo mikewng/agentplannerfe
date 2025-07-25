@@ -1,5 +1,4 @@
 .prompt-chat-ui-container {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +10,10 @@
         border-radius: 8px;
         height: 70vh;
         overflow-y: auto;
+
+        .prompt-box-padding-container {
+            padding: 1rem;
+        }
 
         .prompt-message-container {
             display: flex;

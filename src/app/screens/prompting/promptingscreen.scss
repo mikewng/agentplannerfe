@@ -1,6 +1,5 @@
 .prompting-screen-container {
     width: 95%;
-    height: 100%;
 
     display: flex;
     flex-direction: row;
@@ -9,6 +8,10 @@
     gap: 1rem;
 
     .prompting-sidebar-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+
         padding: 2rem;
         border: 1px solid black;
     }
