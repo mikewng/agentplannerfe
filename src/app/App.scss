@@ -21,6 +21,16 @@ body {
 
 }
 
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    font-size: 1.5rem;
+}
+
 .typewriter {
     overflow: hidden;
     border-right: .15em solid black;
