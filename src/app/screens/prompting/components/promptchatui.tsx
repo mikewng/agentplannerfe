@@ -22,21 +22,45 @@ export default function ChatUI() {
     useEffect(() => {
         const s = io("http://localhost:3001");
         setSocket(s);
-
+        
         s.on("gpt-token", (chunk: string) => {
-            setMessages(prev => {
-                const updated = [...prev];
-                const last = updated[updated.length - 1];
-
-                if (last && last.role === "system") {
-                    last.content += chunk;
-                } else {
-                    updated.push({ id: String(Date.now()), role: "system", content: chunk });
+            setMessages((prev) => {
+                if (prev.length === 0) {
+                    return [
+                        {
+                            id: String(Date.now()),
+                            role: "system",
+                            content: chunk,
+                            createdAt: new Date(),
+                        },
+                    ];
                 }
 
-                return [...updated];
+                const last = prev[prev.length - 1];
+
+                // If last is a system message, replace it with a *new* object
+                if (last && last.role === "system") {
+                    const updatedLast = {
+                        ...last,
+                        content: last.content + chunk, // append the chunk
+                    };
+
+                    return [...prev.slice(0, -1), updatedLast];
+                }
+
+                // Otherwise, append a new system message
+                return [
+                    ...prev,
+                    {
+                        id: String(Date.now()),
+                        role: "system",
+                        content: chunk,
+                        createdAt: new Date(),
+                    },
+                ];
             });
         });
+
 
         return () => {
             s.disconnect();
