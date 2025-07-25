@@ -1,5 +1,4 @@
 .prompt-chat-ui-container {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,10 +6,15 @@
 
     .prompt-chat-ui-box-container {
         width: 100%;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        height: 70vh;
+        border: 1px solid #ccc;
+        height: 74vh;
         overflow-y: auto;
+
+        background-color: #e9e9e9;
+
+        .prompt-box-padding-container {
+            padding: 1rem;
+        }
 
         .prompt-message-container {
             display: flex;
@@ -24,9 +28,19 @@
                 gap: 0.25rem;
 
                 .prompt-message-text {
-                    border: 2px solid black;
-                    border-radius: 0.35rem;
-                    padding: 0.65rem;
+                    border-radius: 0.85rem;
+                    padding: 0.85rem 0.65rem 0.85rem 0.65rem;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    min-width: 3.5rem;
+
+                    .msg-date {
+                        font-size: 0.65rem;
+                        display: flex;
+                        justify-content: end;
+                    }
                 }
             }
 
@@ -40,7 +54,8 @@
                 }
 
                 .prompt-message-text {
-                    background-color: rgb(200, 200, 200);
+                    background-color: rgb(97, 13, 156);
+                    color: white;
                 }
             }
 
@@ -54,7 +69,7 @@
                 }
 
                 .prompt-message-text {
-                    background-color: rgb(82, 200, 255);
+                    background-color: var(--agent-textbox);
                 }
             }
         }
@@ -63,14 +78,27 @@
     .prompt-chat-ui-input-container {
         width: 100%;
         display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 1rem;
-        justify-content: space-around;
-    }
 
-    .prompt-chat-ui-input-control {
-        flex: 1;
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        border: 1px solid #ccc;
+        .prompt-chat-ui-input-form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 0.75rem;
+            padding: 0rem 1.5rem 0rem 1.5rem;
+
+            .prompt-chat-ui-input-control {
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 0.25rem;
+                border: 1px solid #ccc;
+            }
+
+            .send-button {
+                padding: 0.5rem;
+            }
+        }
     }
 }

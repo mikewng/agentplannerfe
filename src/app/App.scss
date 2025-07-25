@@ -1,7 +1,14 @@
+:root {
+    --agent-textbox: rgb(149, 204, 224);
+}
+
+
 body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     overflow-y: hidden;
+    overflow-x: hidden;
+    margin: 0rem;
 }
 
 .core-home-screen {
@@ -27,7 +34,6 @@ body {
 
 .typewriter-text {
     overflow: hidden;
-    border-right: .15em solid black;
     white-space: nowrap;
     animation:
         typing 0.15s steps(40, end),
