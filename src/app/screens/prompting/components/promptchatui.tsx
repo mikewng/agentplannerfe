@@ -50,6 +50,7 @@ export default function ChatUI() {
             id: String(Date.now()),
             role: "user",
             content: input,
+            createdAt: new Date(Date.now())
         };
 
         const newMessages: Message[] = [...messages, userMessage];
@@ -64,6 +65,7 @@ export default function ChatUI() {
                 id: String(Date.now() + 1),
                 role: "system",
                 content: reply,
+                createdAt: new Date(Date.now())
             };
             setMessages([...newMessages, aiMessage]);
         }
@@ -86,28 +88,28 @@ export default function ChatUI() {
                                 <div className="prompt-author-text">
                                     {m.role === "user" ? "You" : "EVA"}
                                 </div>
-                                <div
-                                    className={
-                                        "prompt-message-text" +
-                                        (m.role === "system" ? " typewriter-text" : "")
-                                    }
-                                >
+                                <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>
                                     {m.content || ""}
                                 </div>
+                                {/* <div className="prompt-message-footer">
+                                    {m.createdAt?.getTime()}
+                                </div> */}
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            <form className="prompt-chat-ui-input-container" onSubmit={handleSend}>
-                <input
-                    value={input}
-                    onChange={handleInputChange}
-                    placeholder="Type a message..."
-                    className="prompt-chat-ui-input-control"
-                />
-                <button type="submit">Send</button>
-            </form>
+            <div className="prompt-chat-ui-input-container">
+                <form className="prompt-chat-ui-input-form-container" onSubmit={handleSend}>
+                    <input
+                        value={input}
+                        onChange={handleInputChange}
+                        placeholder="Type a message..."
+                        className="prompt-chat-ui-input-control"
+                    />
+                    <button type="submit">Send</button>
+                </form>
+            </div>
         </div>
     );
 }
