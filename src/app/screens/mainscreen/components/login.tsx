@@ -10,9 +10,7 @@ const Login: React.FC<LoginProps> = ({ supportedApplications }) => {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <div className="login-container"
-            onMouseEnter={() => setIsHovered(true)}
-        >
+        <div className="login-container" onMouseEnter={() => setIsHovered(true)}>
             <div className="login-wrapper">
                 <div className="login-text-button"
                     onClick={() => { setActiveDropdown(!activeDropdown) }}>Login to...</div>

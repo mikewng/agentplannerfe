@@ -1,9 +1,9 @@
 'use client'
 
 import "./App.scss"
-import "./util/mockchatapi";
 
 import { NavigationProvider } from "../app/context/navigationContext";
+import { AuthProvider } from "./context/authContext";
 
 export default function RootLayout({
   children,
@@ -16,9 +16,11 @@ export default function RootLayout({
         <title>EVA Calendar Agent</title>
       </head>
       <body>
-        <NavigationProvider>
-          {children}
-        </NavigationProvider>
+        <AuthProvider>
+          <NavigationProvider>
+            {children}
+          </NavigationProvider>
+        </AuthProvider>
       </body>
     </html>
   );
