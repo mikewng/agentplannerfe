@@ -28,8 +28,19 @@
                 gap: 0.25rem;
 
                 .prompt-message-text {
-                    border-radius: 0.35rem;
-                    padding: 0.65rem;
+                    border-radius: 0.85rem;
+                    padding: 0.85rem 0.65rem 0.85rem 0.65rem;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    min-width: 3.5rem;
+
+                    .msg-date {
+                        font-size: 0.65rem;
+                        display: flex;
+                        justify-content: end;
+                    }
                 }
             }
 
@@ -58,7 +69,7 @@
                 }
 
                 .prompt-message-text {
-                    background-color: rgb(82, 200, 255);
+                    background-color: var(--agent-textbox);
                 }
             }
         }
@@ -75,6 +86,7 @@
             width: 100%;
             display: flex;
             flex-direction: row;
+            gap: 0.75rem;
             padding: 0rem 1.5rem 0rem 1.5rem;
 
             .prompt-chat-ui-input-control {
@@ -83,10 +95,10 @@
                 border-radius: 0.25rem;
                 border: 1px solid #ccc;
             }
+
+            .send-button {
+                padding: 0.5rem;
+            }
         }
-
-
     }
-
-
 }

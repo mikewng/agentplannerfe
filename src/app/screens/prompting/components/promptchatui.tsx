@@ -14,6 +14,7 @@ export default function ChatUI() {
             id: String(Date.now() + 1),
             role: "system",
             content: "Hello! What's on your mind?",
+            createdAt: new Date(Date.now())
         };
         setMessages([...messages, aiMessage]);
     }, [])
@@ -89,11 +90,17 @@ export default function ChatUI() {
                                     {m.role === "user" ? "You" : "EVA"}
                                 </div>
                                 <div className={"prompt-message-text" + (m.role === "system" ? " typewriter-text" : "")}>
-                                    {m.content || ""}
+                                    <div className="msg-content">{m.content || ""}</div>
+                                    <div className="msg-date">
+                                        {m.createdAt ? new Date(m.createdAt).toLocaleTimeString('en-US', {
+                                            timeZone: 'America/New_York',
+                                            hour: 'numeric',
+                                            minute: '2-digit',
+                                            hour12: true
+                                        }) : ""}
+                                    </div>
                                 </div>
-                                {/* <div className="prompt-message-footer">
-                                    {m.createdAt?.getTime()}
-                                </div> */}
+
                             </div>
                         </div>
                     ))}
@@ -102,12 +109,13 @@ export default function ChatUI() {
             <div className="prompt-chat-ui-input-container">
                 <form className="prompt-chat-ui-input-form-container" onSubmit={handleSend}>
                     <input
+                        id="prompt-input"
                         value={input}
                         onChange={handleInputChange}
                         placeholder="Type a message..."
                         className="prompt-chat-ui-input-control"
                     />
-                    <button type="submit">Send</button>
+                    <button className="send-button" type="submit">Send</button>
                 </form>
             </div>
         </div>

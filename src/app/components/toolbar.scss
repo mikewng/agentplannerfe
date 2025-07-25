@@ -1,0 +1,23 @@
+.toolbar-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .toolbar-header-container {
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding-bottom: 2rem;
+    }
+
+    .toolbar-body-container {
+        height: 100%;
+    }
+
+    .logout-button {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

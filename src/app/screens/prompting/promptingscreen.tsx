@@ -1,3 +1,4 @@
+import ToolBar from "@/app/components/toolbar";
 import PromptChatUI from "./components/promptchatui";
 
 import "./promptingscreen.scss"
@@ -6,7 +7,7 @@ const PromptingScreen = () => {
     return (
         <div className="prompting-screen-container">
             <div className="prompting-sidebar-container">
-                Logout
+                <ToolBar />
             </div>
             <div className="prompting-main-body-container">
                 <div className="prompting-header-container">
