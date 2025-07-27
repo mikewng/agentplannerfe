@@ -1,0 +1,59 @@
+.prompting-sidebar-container {
+    min-width: 20rem;
+    max-width: 20em;
+    border-right: 1px solid #ccc;
+
+    display: flex;
+    flex-direction: column;
+
+    .prompting-sidebar-header-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+
+
+        height: 3rem;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        border-bottom: 1px solid #e2e2e2;
+    }
+
+    .toolbar-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .toolbar-header-container {
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding-bottom: 2rem;
+        }
+
+        .toolbar-body-container {
+            height: 100%;
+            width: 100%;
+
+            .toolbar-option {
+                display: flex;
+                justify-content: center;
+
+                padding: 1rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .logout-button {
+            padding: 1rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+}

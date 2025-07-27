@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useChat, Message } from "@ai-sdk/react";
 import { io, Socket } from "socket.io-client";
-import { sendMessageToGPT } from "@/app/util/llmapi";
 import "./promptchatui.scss";
 
 export default function ChatUI() {
@@ -50,7 +49,7 @@ export default function ChatUI() {
                 if (last && last.role === "system") {
                     const updatedLast = {
                         ...last,
-                        content: last.content + chunk, // append the chunk
+                        content: last.content + chunk,
                     };
 
                     return [...prev.slice(0, -1), updatedLast];
@@ -92,16 +91,7 @@ export default function ChatUI() {
 
         if (socket) {
             setIsAgentLoading(true);
-            socket.emit("start-stream", { prompt: input });
-        } else {
-            const reply = await sendMessageToGPT(newMessages);
-            const aiMessage: Message = {
-                id: String(Date.now() + 1),
-                role: "system",
-                content: reply,
-                createdAt: new Date(Date.now())
-            };
-            setMessages([...newMessages, aiMessage]);
+            socket.emit("start-stream", { prompt: newMessages });
         }
     }
 
