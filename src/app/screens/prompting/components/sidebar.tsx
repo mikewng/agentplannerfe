@@ -25,7 +25,13 @@ const SideBar = () => {
                     </div>
                 </div>
                 <div className="toolbar-footer-container">
-                    <div className="logout-button" onClick={() => { navigate('main') }}>Logout</div>
+                    {
+                        !isCollapsed ?
+                            <div className="logout-button" onClick={() => { navigate('main') }}>Logout</div>
+                            :
+                            <div className="logout-button-icon" onClick={() => { navigate('main') }} />
+                    }
+
                 </div>
             </div>
         </div>

@@ -91,6 +91,7 @@
 
                 &.collapsed {
                     justify-content: center;
+
                     .option-text {
                         display: none;
                     }
@@ -104,6 +105,27 @@
             &:hover {
                 cursor: pointer;
             }
+        }
+    }
+
+    .toolbar-footer-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 3rem;
+
+        .logout-button-icon {
+            background-image: url("../../../assets/icons/door-open-solid.svg");
+            width: 1.2rem;
+            height: 1.2rem;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: #e0e0e0;
         }
     }
 
