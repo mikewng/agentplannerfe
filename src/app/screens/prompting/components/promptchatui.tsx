@@ -146,7 +146,7 @@ export default function ChatUI() {
                         placeholder="Type a message..."
                         className="prompt-chat-ui-input-control"
                     />
-                    <button className="send-button" type="submit">Send</button>
+                    <button className="send-button" type="submit"><div className="send-icon"/></button>
                 </form>
             </div>
         </div>
