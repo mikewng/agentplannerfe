@@ -1,7 +1,14 @@
 .prompting-sidebar-container {
     min-width: 20rem;
-    max-width: 20em;
+    max-width: 20rem;
     border-right: 1px solid #ccc;
+    transition: 0.25s;
+
+    &.collapsed {
+        min-width: 4rem;
+        max-width: 4rem;
+        transition: 0.25s;
+    }
 
     display: flex;
     flex-direction: column;
@@ -12,11 +19,30 @@
         justify-content: space-between;
         align-items: center;
 
-
-
         height: 3rem;
         padding: 0.5rem 1rem 0.5rem 1rem;
         border-bottom: 1px solid #e2e2e2;
+
+        &.collapsed {
+            justify-content: center;
+        }
+
+        .sidebar-position-icon {
+            cursor: pointer;
+            background-image: url("../../../assets/icons/chevron-left-solid.svg");
+            width: 1.2rem;
+            height: 1.2rem;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            &.collapsed {
+                background-image: url("../../../assets/icons/chevron-right-solid.svg");
+                width: 1.2rem;
+                height: 1.2rem;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
     }
 
     .toolbar-container {
@@ -38,18 +64,43 @@
 
             .toolbar-option {
                 display: flex;
-                justify-content: center;
-
-                padding: 1rem;
+                justify-content: start;
+                align-items: center;
+                min-height: 3rem;
 
                 &:hover {
+                    transition: 0.15s;
                     cursor: pointer;
+                    border-right: 8px solid black;
+                    background-color: #e0e0e0;
+                }
+
+                .option-icon-container {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+
+                    .option-icon {
+                        background-image: url("../../../assets/icons/calendar-regular.svg");
+                        width: 1.2rem;
+                        height: 1.2rem;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    }
+                }
+
+                &.collapsed {
+                    justify-content: center;
+                    .option-text {
+                        display: none;
+                    }
                 }
             }
         }
 
         .logout-button {
             padding: 1rem;
+
             &:hover {
                 cursor: pointer;
             }
