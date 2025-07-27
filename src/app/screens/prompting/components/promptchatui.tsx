@@ -128,6 +128,8 @@ export default function ChatUI() {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className="prompt-chat-ui-input-container">
                 {
                     isAgentLoading &&
                     <div className="loading-container">
@@ -136,8 +138,6 @@ export default function ChatUI() {
                         </div>
                     </div>
                 }
-            </div>
-            <div className="prompt-chat-ui-input-container">
                 <form className="prompt-chat-ui-input-form-container" onSubmit={handleSend}>
                     <input
                         id="prompt-input"
