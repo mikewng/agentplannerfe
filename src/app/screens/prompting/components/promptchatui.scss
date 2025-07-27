@@ -9,6 +9,7 @@
         border: 1px solid #ccc;
         height: 74vh;
         overflow-y: auto;
+        position: relative;
 
         background-color: #e9e9e9;
 
@@ -73,6 +74,19 @@
                     background-color: var(--agent-textbox);
                 }
             }
+        }
+
+        .loading-container {
+            position: absolute;
+            bottom: 0%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(177, 204, 248, 0.679);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
         }
     }
 

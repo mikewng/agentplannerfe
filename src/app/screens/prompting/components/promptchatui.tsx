@@ -8,6 +8,7 @@ export default function ChatUI() {
     const { messages, setMessages, input, setInput, handleInputChange } = useChat({});
     const scrollRef = useRef<HTMLDivElement>(null);
     const [socket, setSocket] = useState<Socket | null>(null);
+    const [isAgentLoading, setIsAgentLoading] = useState(false);
 
     useEffect(() => {
         const aiMessage: Message = {
@@ -22,8 +23,15 @@ export default function ChatUI() {
     useEffect(() => {
         const s = io("http://localhost:3001");
         setSocket(s);
-        
+
         s.on("gpt-token", (chunk: string) => {
+            if (chunk === "[END STREAM]") {
+                setIsAgentLoading(false)
+                return;
+            }
+
+            setIsAgentLoading(true)
+
             setMessages((prev) => {
                 if (prev.length === 0) {
                     return [
@@ -83,6 +91,7 @@ export default function ChatUI() {
         setInput("");
 
         if (socket) {
+            setIsAgentLoading(true);
             socket.emit("start-stream", { prompt: input });
         } else {
             const reply = await sendMessageToGPT(newMessages);
@@ -129,6 +138,14 @@ export default function ChatUI() {
                         </div>
                     ))}
                 </div>
+                {
+                    isAgentLoading &&
+                    <div className="loading-container">
+                        <div className="loading-text">
+                            EVA is writing their response...
+                        </div>
+                    </div>
+                }
             </div>
             <div className="prompt-chat-ui-input-container">
                 <form className="prompt-chat-ui-input-form-container" onSubmit={handleSend}>
