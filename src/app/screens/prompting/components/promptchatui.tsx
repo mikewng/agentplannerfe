@@ -85,13 +85,21 @@ export default function ChatUI() {
             createdAt: new Date(Date.now())
         };
 
+        const contextMessage: Message = {
+            id: String(Date.now()),
+            role: "user",
+            content: input + " - Treat all messages before this as context, and use that context to conduct actions for this input. Do not do any double bookings.",
+            createdAt: new Date(Date.now())
+        };
+
         const newMessages: Message[] = [...messages, userMessage];
+        const contextMessages: Message[] = [...messages, contextMessage];
         setMessages(newMessages);
         setInput("");
 
         if (socket) {
             setIsAgentLoading(true);
-            socket.emit("start-stream", { prompt: newMessages });
+            socket.emit("start-stream", { prompt: contextMessages });
         }
     }
 
@@ -146,7 +154,7 @@ export default function ChatUI() {
                         placeholder="Type a message..."
                         className="prompt-chat-ui-input-control"
                     />
-                    <button className="send-button" type="submit"><div className="send-icon"/></button>
+                    <button className="send-button" type="submit"><div className="send-icon" /></button>
                 </form>
             </div>
         </div>
